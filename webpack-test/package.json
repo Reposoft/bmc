@@ -1,0 +1,16 @@
+{
+  "name": "bmc-webpack-test",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/webpack"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^1.7.3"
+  },
+  "dependencies": {
+  }
+}
