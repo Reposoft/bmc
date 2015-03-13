@@ -534,13 +534,13 @@
     var Model = Backbone.Model.extend({
       sync: function (method, model, options) {
         _.extend(options, {specialSync: true});
-        return Backbone.Model.prototype.sync.call(this, method, model, options);
+        return options.success();
       }
     });
 
     var Collection = Backbone.Collection.extend({
       model: Model,
-      url: '/test'
+      url: '/test',
     });
 
     var collection = new Collection;
@@ -550,7 +550,6 @@
     };
 
     collection.create({}, {success: success});
-    this.ajaxSettings.success();
 
   });
 
@@ -828,7 +827,7 @@
     col.create(m, opts);
   });
 
-  test("#1412 - Trigger 'request' and 'sync' events.", 4, function() {
+  test("#1412 - Trigger 'request' and 'sync' events.", /* was 4, but bmc edition has no default sync behavior */ 0, function() {
     var collection = new Backbone.Collection;
     collection.url = '/test';
     Backbone.ajax = function(settings){ settings.success(); };
@@ -852,7 +851,7 @@
     collection.off();
   });
 
-  test("#3283 - fetch, create calls success with context", 2, function() {
+  test("#3283 - fetch, create calls success with context", /* was 2, but bmc edition has no default sync behavior */ 0, function() {
     var collection = new Backbone.Collection;
     collection.url = '/test';
     Backbone.ajax = function(settings) {
@@ -933,10 +932,12 @@
         parse: function(resp) {
           strictEqual(resp, model);
         }
-      })
+      }),
+      sync: function(method, mdl, options) {
+        options.success([model]);
+      }
     });
     new Collection().fetch();
-    this.ajaxSettings.success([model]);
   });
 
   test("`sort` shouldn't always fire on `add`", 1, function() {
