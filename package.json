@@ -1,7 +1,7 @@
 {
   "name"          : "bmc",
-  "description"   : "Backbone Models & Collections only, no jQuery dependency so no default REST mapping",
-  "keywords"      : ["model"],
+  "description"   : "The data structures subset of Backbone.js for use in Node and with Webpack",
+  "keywords"      : ["model","dom-free","no-jquery-dep","no-default-sync"],
   "dependencies"  : {
     "underscore"  : ">=1.6.0"
   },
