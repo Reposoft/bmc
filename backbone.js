@@ -683,7 +683,7 @@
       // from being added.
       for (i = 0, l = models.length; i < l; i++) {
         attrs = models[i] || {};
-        if (attrs instanceof Model) {
+        if (this._isModel(attrs)) {
           id = model = attrs;
         } else {
           id = attrs[targetModel.prototype.idAttribute || 'id'];
@@ -909,13 +909,19 @@
     // Prepare a hash of attributes (or other model) to be added to this
     // collection.
     _prepareModel: function(attrs, options) {
-      if (attrs instanceof Model) return attrs;
+      if (this._isModel(attrs)) return attrs;
       options = options ? _.clone(options) : {};
       options.collection = this;
       var model = new this.model(attrs, options);
       if (!model.validationError) return model;
       this.trigger('invalid', this, model.validationError, options);
       return false;
+    },
+
+    // Method for checking whether an object should be considered a model for
+    // the purposes of adding to the collection.
+    _isModel: function (model) {
+      return model instanceof Model;
     },
 
     // Internal method to create a model's ties to a collection.
